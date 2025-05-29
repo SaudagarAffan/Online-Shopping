@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Registration Page</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: linear-gradient(to right, #acb6e5, #e0f7e9, #c1f0f5, #acb6e5);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		.register-box {
+			background: whitesmoke;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+			width: 350px;
+		}
+
+		h2 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		input[type="text"],
+		input[type="email"],
+		input[type="password"],
+		input[type="number"] {
+			width: 100%;
+			padding: 10px;
+			margin-top: 8px;
+			margin-bottom: 20px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+
+		button {
+			width: 100%;
+			padding: 10px;
+			background-color: #28a745;
+			border: none;
+			color: white;
+			font-size: 16px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #218838;
+		}
+
+		.message {
+			text-align: center;
+			margin-top: 10px;
+			font-size: 14px;
+		}
+
+		.error {
+			color: red;
+		}
+
+		.success {
+			color: green;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="register-box">
+		<h2>Registration</h2>
+		<input type="text" id="userid" placeholder="User ID" />
+		<input type="text" id="name" placeholder="Full Name" />
+		<input type="email" id="email" placeholder="Email ID" />
+		<input type="password" id="password" placeholder="Password" />
+		<input type="text" id="address" placeholder="Address" />
+		<input type="number" id="mobil_no" placeholder="Mobile Number" />
+		<button id="registerBtn">Register</button>
+		<div class="message" id="registerMsg"></div>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			$("#registerBtn").click(function () {
+				const userid = $("#userid").val();
+				const name = $("#name").val();
+				const email_Id = $("#email").val();
+				const password = $("#password").val();
+				const address = $("#address").val();
+				const mobil_no = $("#mobil_no").val();
+
+				$.ajax({
+					url: "http://localhost:8080/registration",
+					type: "POST",
+					contentType: "application/json",
+					data: JSON.stringify({
+						email_Id: email_Id,
+						password: password,
+						userid: userid,
+						name: name,
+						address: address,
+						mobil_no: mobil_no
+					}),
+					success: function (response) {
+						alert("Registration Successful!");
+						$("input").val(""); // clear inputs
+					},
+					error: function (xhr) {
+						const errorMessage = xhr.responseJSON?.message || "Registration failed. Try again.";
+						alert(errorMessage); // <-- Popup
+						$("#registerMsg").removeClass("SUCCESS").addClass("error").text(errorMessage);
+					}
+				});
+			});
+		});
+	</script>
+
+
+</body>
+
+</html>
