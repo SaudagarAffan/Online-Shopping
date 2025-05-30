@@ -7,8 +7,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="userdetails")           
-public class LoginUser {
-
+public class LoginUser 
+{
 	@Id
 	@Column(name = "UserID" , nullable = false , unique = true) 	
 	private String userId;
