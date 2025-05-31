@@ -24,4 +24,10 @@ public class FrontedController
 	{
 		return "dashboard";
 	}
+	
+	@GetMapping("/product")
+	public String getproductPage( String product) 
+	{
+		return "product";
+	}
 }
