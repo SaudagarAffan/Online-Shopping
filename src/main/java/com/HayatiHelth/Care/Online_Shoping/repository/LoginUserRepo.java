@@ -12,7 +12,6 @@ public interface LoginUserRepo extends JpaRepository<LoginUser, String>
 	@Query(value = "SELECT * FROM userdetails WHERE user_email = ?1", nativeQuery = true)
 	LoginUser getByUserEmail(String email);
 	LoginUser getByUserId(String userId);
-
 }
 
 

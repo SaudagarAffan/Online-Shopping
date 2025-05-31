@@ -87,30 +87,44 @@
 				const userPassword = $("#userPassword").val();
 
 				if (!userEmail || !userPassword) {
-					$("#responseMsg").removeClass("SUCCESS").addClass("error").text("Both fields are required.");
-					return; // Stop the AJAX call
+					$("#responseMsg").removeClass("success").addClass("error").text("Both fields are required.");
+					return;
 				}
+
 				$.ajax({
 					url: "http://localhost:8080/login",
 					type: "POST",
 					contentType: "application/json",
 					data: JSON.stringify({
-						userEmail: userEmail,
-						userPassword: userPassword
+						email: userEmail,
+						password: userPassword
 					}),
 					success: function (response) {
-						$("#responseMsg").removeClass("error").addClass("SUCCESS").text("Login Successful!");
-						// Optionally redirect:
-						// window.location.href = "/dashboard";
+						if (response.status == "successful") {
+							// ✅ Store token and email in session storage
+							sessionStorage.setItem("token", response.token);
+							sessionStorage.setItem("email", userEmail);
+
+
+							// ✅ Show message and redirect
+							$("#responseMsg").removeClass("error").addClass("success").text("Login Successful!");
+
+							setTimeout(function () {
+								window.location.href = "dashboard"; // Redirect after 1s
+							}, 1000);
+
+						} else {
+							$("#responseMsg").removeClass("success").addClass("error").text("Login failed!");
+						}
 					},
 					error: function (xhr) {
-						alert("Invalid EmailID or Password!");
+						$("#responseMsg").removeClass("success").addClass("error").text("Invalid EmailID or Password!");
 					}
 				});
-
 			});
 		});
 	</script>
+
 
 </body>
 

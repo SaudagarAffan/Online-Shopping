@@ -19,4 +19,9 @@ public class FrontedController
 		return "registrationPage";
 	}
 	
+	@GetMapping("/dashboard")
+	public String getdashboardPage( String dashboard) 
+	{
+		return "dashboard";
+	}
 }
