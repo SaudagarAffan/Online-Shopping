@@ -3,6 +3,8 @@ package com.HayatiHelth.Care.Online_Shoping.filter;
 import java.io.IOException; 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.HayatiHelth.Care.Online_Shoping.model.LoginUser;
 import com.HayatiHelth.Care.Online_Shoping.service.LoginServiceIMPL;
 
@@ -14,12 +16,12 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
+@Component
 public class AuthenticationFilter implements Filter 
 {
 	@Autowired
 	private LoginServiceIMPL loginServiceIMPL;
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException 
