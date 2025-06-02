@@ -15,6 +15,6 @@ public interface LoginUserRepo extends JpaRepository<LoginUser, String>
 }
 
 
-	
+
 
 

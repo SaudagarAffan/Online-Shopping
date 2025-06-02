@@ -50,6 +50,4 @@ public class Product {
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
 	}
-
-   
 }

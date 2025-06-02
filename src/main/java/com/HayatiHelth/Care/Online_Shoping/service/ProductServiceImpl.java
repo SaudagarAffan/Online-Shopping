@@ -9,39 +9,47 @@ import com.HayatiHelth.Care.Online_Shoping.model.Product;
 import com.HayatiHelth.Care.Online_Shoping.repository.ProductRepository;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService 
+{
 
-    @Autowired
-    private ProductRepository productRepo;
+	@Autowired
+	private ProductRepository productRepo;
 
-    @Override
-    public List<Product> getAllProducts() {
-        return productRepo.findAll();
-    }
+	@Override
+	public List<Product> getAllProducts() 
+	{
+		return productRepo.findAll();
+	}
 
-    @Override
-    public Product getProductById(Long id) {
-        return productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-    }
+	@Override
+	public Product getProductById(Long id) 
+	{
+		System.out.println("Fetching product with ID: " + id);
+		return productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+	}
 
-    @Override
-    public Product addProduct(Product product) {
-        return productRepo.save(product);
-    }
+	@Override
+	public Product addProduct(Product product) 
+	{
+		return productRepo.save(product);
+	}
 
-    @Override
-    public Product updateProduct(Product product) {
-        Product existing = getProductById(product.getProductID());
-        existing.setProductName(product.getProductName());
-        existing.setProductDescription(product.getProductDescription());
-        existing.setProductPrice(product.getProductPrice());
-        existing.setProductStock(product.getProductStock());
-        existing.setCategoryType(product.getCategoryType());
-        return productRepo.save(existing);
-    }
+	@Override
+	public Product updateProduct(Product product) 
+	{
+		Product existing = getProductById(product.getProductID());
+		existing.setProductName(product.getProductName());
+		existing.setProductDescription(product.getProductDescription());
+		existing.setProductPrice(product.getProductPrice());
+		existing.setProductStock(product.getProductStock());
+		existing.setCategoryType(product.getCategoryType());
+		return productRepo.save(existing);
+	}
 
-    @Override
-    public void deleteProduct(Long id) {
-        productRepo.deleteById(id);
-    }
+	@Override
+	public void deleteProduct(Long id) 
+	{
+		System.out.println("Deleting product with ID: " + id);
+		productRepo.deleteById(id);
+	}
 }

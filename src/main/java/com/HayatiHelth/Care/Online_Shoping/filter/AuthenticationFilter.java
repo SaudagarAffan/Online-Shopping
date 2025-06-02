@@ -32,8 +32,7 @@ public class AuthenticationFilter implements Filter
 		String path = httpRequest.getRequestURI();
 		System.out.println(path);
 		if (path.equals("/login") || path.equals("/registration") || path.equals("/loginPage")
-				|| path.equals("/registrationPage") || path.equals("/dashboard") || path.equals("/product")
-				|| path.equals("/products") || path.equals("/product/{productID}")) 
+				|| path.equals("/registrationPage") || path.equals("/dashboard") || path.equals("/productPage")) 
 		{
 			chain.doFilter(request, response);
 			return;

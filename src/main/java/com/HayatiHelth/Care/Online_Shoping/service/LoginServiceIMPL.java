@@ -36,17 +36,14 @@ public class LoginServiceIMPL
 	{
 		loginUserRepo.save(user);
 	}
-	
-	
-	public boolean existsByEmail(String email) {
-	    return loginUserRepo.getByUserEmail(email) != null;
+
+	public boolean existsByEmail(String email) 
+	{
+		return loginUserRepo.getByUserEmail(email) != null;
 	}
 
-	public boolean existsByUserId(String userId) {
-	    return loginUserRepo.findById(userId).isPresent();
+	public boolean existsByUserId(String userId) 
+	{
+		return loginUserRepo.findById(userId).isPresent();
 	}
-//	public void processRequest() {
-//	
-//	}
-
 }

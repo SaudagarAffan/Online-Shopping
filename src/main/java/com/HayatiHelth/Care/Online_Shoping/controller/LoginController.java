@@ -23,7 +23,7 @@ public class LoginController
 {
 	@Autowired
 	private LoginServiceIMPL loginServiceIMPL;
-	
+
 	@Autowired
 	private TokenService tokenService;
 
@@ -45,15 +45,6 @@ public class LoginController
 		return ResponseEntity.ok(Collections.singletonMap("name", user.getUserName()));
 	}
 
-//		boolean isValid = tokenService.isValidToken(token);
-//		if (!isValid) 
-//		{
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//					.body(Collections.singletonMap("error", "Invalid token"));
-//		}
-
-		
-	
 	@GetMapping("/some-protected-endpoint")
 	public ResponseEntity<String> protectedEndpoint(@RequestHeader("Authorization") String token,
 			@RequestHeader("emailId") String email) 

@@ -2,84 +2,99 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Dashboard</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #74ebd5, #acb6e5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+	<meta charset="UTF-8" />
+	<title>Dashboard</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: linear-gradient(to right, #74ebd5, #acb6e5);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			margin: 0;
+		}
 
-        #welcomeMsg {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-        }
+		#welcomeMsg {
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: #333;
+		}
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-        }
+		button {
+			padding: 10px 20px;
+			font-size: 16px;
+			background-color: #007bff;
+			border: none;
+			border-radius: 6px;
+			color: white;
+			cursor: pointer;
 
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+
+		}
+
+		.button-container {
+			display: flex;
+			gap: 20px;
+			/* space between buttons */
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+	</style>
 </head>
 
 <body>
-    <div id="welcomeMsg">Loading user info...</div>
-    <button id="logoutBtn">Logout</button>
+	<div id="welcomeMsg">Loading user info...</div>
+	<div class="button-container">
+		<button id="logoutBtn">Logout</button>
+		<button id="productBtn">Go-To-Products</button>
+	</div>
 
-    <script>
-        $(document).ready(function () {
-            const token = sessionStorage.getItem('token');
-            const email = sessionStorage.getItem('email');
+	<script>
+		$(document).ready(function () {
+			const token = sessionStorage.getItem('token');
+			const email = sessionStorage.getItem('email');
 
-            if (!token || !email) {
-                alert('You are not logged in. Redirecting to login page.');
-                window.location.href = 'loginpage.html';
-                return;
-            }
+			if (!token || !email) {
+				alert('You are not logged in. Redirecting to login page.');
+				window.location.href = 'loginpage.html';
+				return;
+			}
 
-            // Fetch user info from protected endpoint
-            $.ajax({
-                url: 'http://localhost:8080/user-info',  // change to your protected API endpoint
-                method: 'GET',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', token);
-                    xhr.setRequestHeader('emailId', email);
-                },
-                success: function (response) {
-                    // assuming response has a 'name' field
-                    $('#welcomeMsg').text('Welcome, ' + response.name + '!');
-                },
-                error: function () {
-                    alert('Session expired or unauthorized. Please login again.');
-                    sessionStorage.clear();
-                    window.location.href = 'loginpage.html';
-                }
-            });
+			// Fetch user info from protected endpoint
+			$.ajax({
+				url: 'http://localhost:8080/user-info',  // change to your protected API endpoint
+				method: 'GET',
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader('Authorization', token);
+					xhr.setRequestHeader('emailId', email);
+				},
+				success: function (response) {
+					// assuming response has a 'name' field
+					$('#welcomeMsg').text('Welcome, ' + response.name + '!');
+				},
+				error: function () {
+					alert('Session expired or unauthorized. Please login again.');
+					sessionStorage.clear();
+					window.location.href = 'loginpage.html';
+				}
+			});
 
-            // Logout button clears session and redirects
-            $('#logoutBtn').click(function () {
-                sessionStorage.clear();
-                window.location.href = 'loginpage.html';
-            });
-        });
-    </script>
+			// Logout button clears session and redirects
+			$('#logoutBtn').click(function () {
+				sessionStorage.clear();
+				window.location.href = 'loginpage.html';
+			});
+
+			$('#productBtn').click(function () {
+				window.location.href = 'productPage';
+			});
+		});
+	</script>
 </body>
 
 </html>

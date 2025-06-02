@@ -190,7 +190,6 @@
 		<h1>Product Management Admin</h1>
 
 		<!-- Add / Update Product Form -->
-		<!-- Add / Update Product Form -->
 		<h2>Add / Update Product</h2>
 		<input type="number" id="productID" placeholder="Product ID (for update only)" />
 		<input type="text" id="productName" placeholder="Product Name" />
@@ -231,11 +230,16 @@
 		/* Your JavaScript remains the same */
 		const baseUrl = 'http://localhost:8080/products';
 
+		const token = sessionStorage.getItem('token');
+		const email = sessionStorage.getItem('email');
+
+
 		function addProduct() {
 			const product = gatherProductForm();
 			fetch(baseUrl, {
 				method: 'POST',
-				headers: {'Content-Type': 'application/json'},
+				headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email},
+
 				body: JSON.stringify(product)
 			}).then(res => {
 				if (res.ok) {
@@ -254,7 +258,7 @@
 			}
 			fetch(baseUrl, {
 				method: 'PATCH',
-				headers: {'Content-Type': 'application/json'},
+				headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email},
 				body: JSON.stringify(product)
 			}).then(res => {
 				if (res.ok) {
@@ -271,7 +275,7 @@
 				alert('Please enter product ID');
 				return;
 			}
-			fetch(`${baseUrl}/${id}`)
+			fetch(`${baseUrl}/${id}`, {method: 'GET', headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email}, })
 				.then(res => {
 					if (res.ok) return res.json();
 					else throw new Error('Product not found');
@@ -283,7 +287,7 @@
 		}
 
 		function getAllProducts() {
-			fetch(baseUrl)
+			fetch(baseUrl, {method: 'GET', headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email}, })
 				.then(res => res.json())
 				.then(products => {
 					const tbody = document.querySelector('#productsTable tbody');
@@ -299,7 +303,7 @@
               <td>${p.categoryType}</td>
               <td>
                 <button onclick="deleteProduct(${p.productID})">Delete</button>
-                <button onclick='fillForm(${JSON.stringify(p)})'>Edit</button>
+             
               </td>`;
 						tbody.appendChild(tr);
 					});
@@ -308,7 +312,7 @@
 
 		function deleteProduct(id) {
 			if (!confirm('Are you sure to delete product #' + id + '?')) return;
-			fetch(`${baseUrl}/${id}`, {method: 'DELETE'})
+			fetch(`${baseUrl}/${id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email}, })
 				.then(res => {
 					if (res.status === 204) {
 						alert('Product deleted');

@@ -4,7 +4,7 @@ public class LoginResponse
 {
 	private String status;
 	private String token;
-	
+
 	public LoginResponse(String status , String token) 
 	{
 		this.status = status;

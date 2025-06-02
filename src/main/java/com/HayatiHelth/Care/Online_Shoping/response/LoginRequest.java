@@ -1,13 +1,8 @@
-package com.HayatiHelth.Care.Online_Shoping.response;
+package com.HayatiHelth.Care.Online_Shoping.response; 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class LoginRequest {
-	
-//	@JsonProperty("userEmail")
+public class LoginRequest 
+{
 	private String email;
-	
-//	@JsonProperty("userPassword")
 	private String password;
 
 	public String getEmail() { return email; }
