@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.HayatiHelth.Care.Online_Shoping.model.LoginUser;
-import com.HayatiHelth.Care.Online_Shoping.model.RegistrationUser;
-import com.HayatiHelth.Care.Online_Shoping.response.LoginRequest;
-import com.HayatiHelth.Care.Online_Shoping.response.LoginResponse;
+import com.HayatiHelth.Care.Online_Shoping.beans.RegistrationUser;
+import com.HayatiHelth.Care.Online_Shoping.beans.LoginRequest;
+import com.HayatiHelth.Care.Online_Shoping.beans.LoginResponse;
 import com.HayatiHelth.Care.Online_Shoping.service.LoginServiceIMPL;
 import com.HayatiHelth.Care.Online_Shoping.service.TokenService;
 
@@ -29,7 +29,7 @@ public class LoginController
 
 	@GetMapping("/user-info")
 	public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String token,
-			@RequestHeader("emailId") String email) 
+			@RequestHeader("emailId") String email)
 	{
 		if (token == null || email == null) 
 		{
@@ -61,7 +61,7 @@ public class LoginController
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) 
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request)
 	{
 		System.out.println("Login attempt for email: " + request.getEmail());
 
@@ -91,7 +91,7 @@ public class LoginController
 	}
 
 	@PostMapping("/registration")
-	public ResponseEntity<?> register(@RequestBody RegistrationUser registrationUser) 
+	public ResponseEntity<?> register(@RequestBody RegistrationUser registrationUser)
 	{
 		boolean emailExists = loginServiceIMPL.existsByEmail(registrationUser.getEmail_Id());
 		if (emailExists) 
@@ -100,24 +100,14 @@ public class LoginController
 					.body(Collections.singletonMap("message", "EmailID is already registered"));
 		}
 
-		boolean userIdExists = loginServiceIMPL.existsByUserId(registrationUser.getUserid());
+		boolean userIdExists = loginServiceIMPL.existsByEmail(registrationUser.getEmail_Id());
 		if (userIdExists)
 		{
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 					.body(Collections.singletonMap("message", "UserID is already registered"));
 		}
 
-		LoginUser user = new LoginUser();
-		user.setUserEmail(registrationUser.getEmail_Id());
-		user.setUserId(registrationUser.getUserid());
-		user.setUserName(registrationUser.getName());
-		user.setUserAddress(registrationUser.getAddress());
-		user.setAuthToken("ABC");
-		user.setLastLoggedin("da");
-		user.setUserPassword(registrationUser.getPassword());
-		user.setPhoneNumber(registrationUser.getMobil_no().longValue());
-
-		loginServiceIMPL.saveUser(user);
+		loginServiceIMPL.saveRegistrationUser(registrationUser);
 
 		return ResponseEntity.ok(Collections.singletonMap("message", "Registration Successful"));
 	}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Place Order</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', sans-serif;
+			margin: 0;
+			padding: 40px 20px;
+			background: linear-gradient(135deg, #2b5876, #4e4376);
+			color: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			min-height: 100vh;
+		}
+
+		.container {
+			background: rgba(255, 255, 255, 0.1);
+			padding: 30px;
+			border-radius: 16px;
+			max-width: 600px;
+			width: 100%;
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+			backdrop-filter: blur(15px);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		label {
+			display: block;
+			margin-top: 15px;
+			font-weight: bold;
+		}
+
+		input {
+			width: 100%;
+			padding: 12px;
+			margin-top: 6px;
+			border: none;
+			border-radius: 8px;
+			background: rgba(255, 255, 255, 0.1);
+			color: white;
+			font-size: 15px;
+		}
+
+		input:focus {
+			outline: none;
+			background: rgba(255, 255, 255, 0.2);
+			box-shadow: 0 0 8px #a28fff;
+		}
+
+		button {
+			margin-top: 20px;
+			padding: 12px;
+			width: 100%;
+			background-color: #6c63ff;
+			border: none;
+			border-radius: 8px;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+			font-size: 16px;
+			transition: background 0.3s ease;
+		}
+
+		button:hover {
+			background-color: #5848c2;
+		}
+
+		table {
+			width: 100%;
+			margin-top: 20px;
+			border-collapse: collapse;
+			background: rgba(255, 255, 255, 0.1);
+			color: white;
+			border-radius: 12px;
+			overflow: hidden;
+		}
+
+		th,
+		td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		}
+
+		th {
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Place Order</h1>
+		<div id="productSection">
+			<label>Product Name</label>
+			<input type="text" id="productName" readonly />
+
+			<label>Price</label>
+			<input type="text" id="productPrice" readonly />
+
+			<label>Available Stock</label>
+			<input type="text" id="productStock" readonly />
+
+			<label>Quantity</label>
+			<input type="number" id="orderQuantity" placeholder="Enter quantity to buy" />
+		</div>
+
+		<button onclick="placeOrder()">Confirm Order</button>
+		<button onclick="getAllOrders()">Get All Orders</button>
+
+		<div id="orderSection"></div>
+	</div>
+
+	<script>
+		const baseUrl = 'http://localhost:8080/orders';
+		const token = sessionStorage.getItem("token");
+		const email = sessionStorage.getItem("email");
+		const productId = sessionStorage.getItem("selectedProductId");
+
+		if (!token || !email) {
+			alert("You are not logged in. Redirecting to login.");
+			window.location.href = "index.html";
+		}
+
+		if (!productId) {
+			alert("No product selected. Redirecting to product page.");
+			window.location.href = "productPage.html";
+		}
+
+		let product = null;
+
+		// Fetch selected product details
+		fetch(`http://localhost:8080/products/${productId}`, {
+			method: 'GET',
+			headers: {
+				'Authorization': token,
+				'emailId': email,
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => {
+				if (!res.ok) throw new Error("Failed to fetch product. Error: " + res.status);
+				return res.json();
+			})
+			.then(data => {
+				product = data;
+				document.getElementById("productName").value = product.productName;
+				document.getElementById("productPrice").value = product.productPrice;
+				document.getElementById("productStock").value = product.productStock;
+			})
+			.catch(err => {
+				alert(err.message);
+				window.location.href = "productPage.html";
+			});
+
+		// Place Order
+		function placeOrder() {
+			const quantity = parseInt(document.getElementById("orderQuantity").value);
+			if (!quantity || quantity <= 0) {
+				alert("Please enter a valid quantity.");
+				return;
+			}
+			if (quantity > product.productStock) {
+				alert("Quantity exceeds available stock.");
+				return;
+			}
+
+			const orderData = {
+				productID: product.productID,
+				productName: product.productName,
+				amount: product.productPrice,
+				quantity: quantity
+			};
+
+			fetch(`${baseUrl}/place`, {
+				method: "POST",
+				headers: {
+					"Authorization": token,
+					"emailId": email,
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(orderData)
+			})
+				.then(res => {
+					if (res.ok) {
+						alert("Order placed successfully!");
+						return res.json();
+					} else {
+						alert("Failed to place order.");
+					}
+				})
+				.then(order => {
+					if (order) {
+						document.getElementById('orderSection').textContent = JSON.stringify(order, null, 2);
+					}
+				})
+				.catch(err => alert(err.message));
+		}
+
+		// Get All Orders
+		function getAllOrders() {
+			fetch(`${baseUrl}/all`, {
+				method: "GET",
+				headers: {
+					"Authorization": token,
+					"emailId": email,
+					"Content-Type": "application/json"
+				}
+			})
+				.then(res => {
+					if (!res.ok) throw new Error("Failed to fetch orders. Error: " + res.status);
+					return res.json();
+				})
+				.then(orders => {
+					if (orders.length === 0) {
+						document.getElementById('orderSection').innerHTML = "<p>No orders found.</p>";
+						return;
+					}
+
+					let html = `
+						<h3>Your Orders:</h3>
+						<table>
+							<thead>
+								<tr>
+									<th>Order ID</th>
+									<th>Product Name</th>
+									<th>Amount</th>
+									<th>Quantity</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+					`;
+
+					orders.forEach(order => {
+						html += `
+							<tr>
+								<td>${order.orderId}</td>
+								<td>${order.productName}</td>
+								<td>₹${order.productAmount}</td>
+								<td>${order.productQuantity}</td>
+								<td>${order.localDateTime}</td>
+							</tr>
+						`;
+					});
+
+					html += `</tbody></table>`;
+					document.getElementById('orderSection').innerHTML = html;
+				})
+				.catch(err => alert(err.message));
+		}
+	</script>
+</body>
+
+</html>

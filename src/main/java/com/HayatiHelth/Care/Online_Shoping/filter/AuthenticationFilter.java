@@ -15,7 +15,6 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 @Component
 public class AuthenticationFilter implements Filter 
 {
@@ -32,7 +31,7 @@ public class AuthenticationFilter implements Filter
 		String path = httpRequest.getRequestURI();
 		System.out.println(path);
 		if (path.equals("/login") || path.equals("/registration") || path.equals("/loginPage")
-				|| path.equals("/registrationPage") || path.equals("/dashboard") || path.equals("/productPage")) 
+				|| path.equals("/registrationPage") || path.equals("/dashboard") || path.equals("/productPage") || path.equals("/orderPage")) 
 		{
 			chain.doFilter(request, response);
 			return;

@@ -1,4 +1,4 @@
-package com.HayatiHelth.Care.Online_Shoping.response; 
+package com.HayatiHelth.Care.Online_Shoping.beans;
 
 public class LoginRequest 
 {

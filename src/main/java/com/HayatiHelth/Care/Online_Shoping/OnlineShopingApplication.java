@@ -15,13 +15,16 @@ public class OnlineShopingApplication
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
+	public WebMvcConfigurer corsConfigurer() 
+	{
+		return new WebMvcConfigurer() 
+		{
 			@Override
-			public void addCorsMappings(CorsRegistry registry) {
+			public void addCorsMappings(CorsRegistry registry) 
+			{
 				registry.addMapping("/**")
 				.allowedOrigins("*")
-				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+				.allowedMethods("GET" , "POST" , "PUT" , "DELETE" , "OPTIONS")
 				.allowedHeaders("*");
 			}
 		};

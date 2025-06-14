@@ -303,7 +303,7 @@
               <td>${p.categoryType}</td>
               <td>
                 <button onclick="deleteProduct(${p.productID})">Delete</button>
-             
+             	<button onclick="placeOrder(${p.productID})">Buy now</button>
               </td>`;
 						tbody.appendChild(tr);
 					});
@@ -349,6 +349,11 @@
 			document.getElementById('productStock').value = '';
 			document.getElementById('categoryType').value = '';
 		}
+		
+		function placeOrder(productId) {
+					sessionStorage.setItem('selectedProductId', productId);
+					window.location.href = 'orderPage';
+				}
 
 		getAllProducts();
 	</script>

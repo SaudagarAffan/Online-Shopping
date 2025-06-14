@@ -1,4 +1,4 @@
-package com.HayatiHelth.Care.Online_Shoping.model;
+package com.HayatiHelth.Care.Online_Shoping.beans;
 
 public class RegistrationUser 
 {

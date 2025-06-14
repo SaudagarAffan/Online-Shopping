@@ -7,11 +7,10 @@ import org.springframework.stereotype.Repository;
 import com.HayatiHelth.Care.Online_Shoping.model.LoginUser;
 
 @Repository
-public interface LoginUserRepo extends JpaRepository<LoginUser, String>
+public interface LoginUserRepository extends JpaRepository<LoginUser, Integer>
 {
-	@Query(value = "SELECT * FROM userdetails WHERE user_email = ?1", nativeQuery = true)
 	LoginUser getByUserEmail(String email);
-	LoginUser getByUserId(String userId);
+	LoginUser getByUserId(Integer userId);
 }
 
 

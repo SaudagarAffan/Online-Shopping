@@ -2,6 +2,8 @@ package com.HayatiHelth.Care.Online_Shoping.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,8 +12,9 @@ import jakarta.persistence.Table;
 public class LoginUser 
 {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserID" , nullable = false , unique = true) 	
-	private String userId;
+	private Integer userId;
 	
 	@Column(name = "UserName" , nullable = false) 	
 	private String userName;
@@ -38,9 +41,6 @@ public class LoginUser
 		this.userName = userName;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
@@ -94,7 +94,15 @@ public class LoginUser
 		return lastLoggedin;
 	}
 
-	public String getUserId() {
+
+	public Integer getUserId() {
 		return userId;
 	}
+
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
+
 }

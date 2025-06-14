@@ -30,4 +30,10 @@ public class FrontedController
 	{
 		return "productPage";
 	}
+	
+	@GetMapping("/orderPage")
+	public String getorderPage( String order) 
+	{
+		return "orderPage";
+	}
 }

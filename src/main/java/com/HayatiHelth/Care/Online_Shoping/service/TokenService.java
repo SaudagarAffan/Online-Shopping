@@ -11,10 +11,10 @@ public class TokenService
 {
 	private Map<String, String> tokenStore = new HashMap<>();
 
-	public String generateToken(String userId)
+	public String generateToken(Integer userId)
 	{
 		String token = UUID.randomUUID().toString();
-		tokenStore.put(token, userId);
+		//tokenStore.put(token, userId);
 		return token;
 	}
 	public boolean isValidToken(String token)
