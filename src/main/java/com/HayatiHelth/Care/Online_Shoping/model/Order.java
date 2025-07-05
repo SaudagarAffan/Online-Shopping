@@ -38,7 +38,6 @@ public class Order
     private LoginUser loginUser;
 
 	
-
 	@Column(name = "OrderDate" , nullable = false)
     private LocalDateTime localDateTime;
     

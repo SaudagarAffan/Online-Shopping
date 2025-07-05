@@ -48,6 +48,7 @@
 			font-size: 16px;
 			border-radius: 5px;
 			cursor: pointer;
+			margin-top: 10px;
 		}
 
 		button:hover {
@@ -67,6 +68,29 @@
 		.success {
 			color: green;
 		}
+
+		.register-text {
+			text-align: center;
+			margin-top: 15px;
+			font-size: 14px;
+		}
+
+		.register-btn {
+			width: 60%;
+			padding: 8px;
+			background-color: #007bff;
+			border: none;
+			color: white;
+			font-size: 14px;
+			border-radius: 5px;
+			cursor: pointer;
+			margin: 10px auto 0;
+			display: block;
+		}
+
+		.register-btn:hover {
+			background-color: #0056b3;
+		}
 	</style>
 </head>
 
@@ -77,6 +101,11 @@
 		<input type="text" id="userEmail" placeholder="Email" />
 		<input type="password" id="userPassword" placeholder="Password" />
 		<button id="loginBtn">Login</button>
+
+		<!-- Registration Section -->
+		<div class="register-text">For Registration Click Here:</div>
+		<button class="register-btn" onclick="window.location.href='registrationPage'">Register</button>
+
 		<div class="message" id="responseMsg"></div>
 	</div>
 
@@ -101,17 +130,14 @@
 					}),
 					success: function (response) {
 						if (response.status == "successful") {
-							// ✅ Store token and email in session storage
 							sessionStorage.setItem("token", response.token);
 							sessionStorage.setItem("email", userEmail);
 
-							// ✅ Show message and redirect
 							$("#responseMsg").removeClass("error").addClass("success").text("Login Successful!");
 
 							setTimeout(function () {
-								window.location.href = "dashboard"; // Redirect after 1s
+								window.location.href = "dashboard";
 							}, 1000);
-
 						} else {
 							$("#responseMsg").removeClass("success").addClass("error").text("Login failed!");
 						}

@@ -18,7 +18,7 @@ public class RegistrationUser
 	private int pincode;
 	private String city;
 	private String userid;
-
+	
 	public String getName() 
 	{
 		return name;

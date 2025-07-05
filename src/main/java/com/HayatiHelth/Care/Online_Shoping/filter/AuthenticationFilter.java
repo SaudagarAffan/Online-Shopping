@@ -31,18 +31,20 @@ public class AuthenticationFilter implements Filter
 		String path = httpRequest.getRequestURI();
 		System.out.println(path);
 		if (path.equals("/login") || path.equals("/registration") || path.equals("/loginPage")
-				|| path.equals("/registrationPage") || path.equals("/dashboard") || path.equals("/productPage") || path.equals("/orderPage")) 
+				|| path.equals("/registrationPage") || path.equals("/dashboard") 
+				|| path.equals("/productPage") || path.equals("/orderPage")) 
 		{
 			chain.doFilter(request, response);
 			return;
 		}
 
 		String token = httpRequest.getHeader("Authorization");
-		if (token == null || !isValidToken (token ,   request)) 
+		if (token == null || !isValidToken (token ,   request) || !isAdminUser(path, httpRequest)) 
 		{
 			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		}
+
 		chain.doFilter(request, response);
 	}
 
@@ -51,5 +53,18 @@ public class AuthenticationFilter implements Filter
 		String email = ((HttpServletRequest) request).getHeader("emailId");
 		LoginUser user = loginServiceIMPL.getUserByEmail(email);
 		return user.getAuthToken().equals(token);
+	}
+
+	private boolean isAdminUser( String path , HttpServletRequest httpRequest  )
+	{
+		if(path.equals("/products") && ( httpRequest.getMethod().equals("POST") 
+				|| httpRequest.getMethod().equals("PATCH") || httpRequest.getMethod().equals("DELETE") ))
+		{
+			String email = httpRequest.getHeader("emailId");
+			LoginUser user = loginServiceIMPL.getUserByEmail(email);
+			return user.getUserType().equals("ADMIN");
+
+		}
+		return true;
 	}
 }

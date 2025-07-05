@@ -6,13 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Product Management Admin</title>
 	<style>
-		/* Base reset & background */
 		body {
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 			margin: 0;
 			padding: 0;
-			background: linear-gradient(135deg, #2b5876, #4e4376);
-			color: #fff;
+			background-color: whitesmoke;
+			color: #000;
 			min-height: 100vh;
 			display: flex;
 			justify-content: center;
@@ -20,57 +19,50 @@
 			padding: 40px 20px;
 		}
 
-		/* Main container */
 		.container {
-			background: rgba(255, 255, 255, 0.08);
+			background: #ffffff;
 			padding: 40px 50px;
 			border-radius: 16px;
 			max-width: 1000px;
 			width: 100%;
-			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-			backdrop-filter: blur(15px);
-			border: 1px solid rgba(255, 255, 255, 0.15);
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+			border: 1px solid #ddd;
 		}
 
 		h1,
 		h2 {
 			text-align: center;
-			color: #ffffff;
+			color: #333333;
 			margin-bottom: 20px;
 			letter-spacing: 1px;
-			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 		}
 
-		/* Input Fields */
 		input[type="text"],
 		input[type="number"] {
 			padding: 14px 16px;
 			margin: 10px 10px 20px 0;
-			border: none;
+			border: 1px solid #ccc;
 			border-radius: 8px;
 			width: calc(50% - 12px);
 			font-size: 15px;
-			background: rgba(255, 255, 255, 0.1);
-			color: #fff;
+			background: #f9f9f9;
+			color: #000;
 			box-sizing: border-box;
-			backdrop-filter: blur(8px);
-			box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 			transition: all 0.3s ease;
 		}
 
 		input[type="text"]::placeholder,
 		input[type="number"]::placeholder {
-			color: #cccccc;
+			color: #888;
 		}
 
 		input[type="text"]:focus,
 		input[type="number"]:focus {
 			outline: none;
-			background: rgba(255, 255, 255, 0.15);
-			box-shadow: 0 0 8px #a28fff;
+			background: #fff;
+			box-shadow: 0 0 6px #a28fff;
 		}
 
-		/* Buttons */
 		button {
 			padding: 12px 22px;
 			margin: 10px 10px 20px 0;
@@ -82,7 +74,7 @@
 			font-weight: 600;
 			cursor: pointer;
 			transition: background 0.3s ease, transform 0.2s ease;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		}
 
 		button:hover {
@@ -90,54 +82,52 @@
 			transform: translateY(-2px);
 		}
 
-		/* Product table */
 		table {
 			width: 100%;
 			border-collapse: collapse;
 			margin-top: 30px;
-			background: rgba(255, 255, 255, 0.1);
+			background: #f5f5f5;
 			border-radius: 12px;
 			overflow: hidden;
-			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 		}
 
 		th,
 		td {
 			padding: 16px 20px;
 			text-align: left;
-			color: #f0f0f0;
+			color: #333;
 			font-weight: 500;
+			border-bottom: 1px solid #ddd;
 		}
 
 		th {
-			background-color: rgba(120, 103, 240, 0.6);
+			background-color: #e3e0ff;
 			text-transform: uppercase;
 			letter-spacing: 0.5px;
 		}
 
 		tr:nth-child(even) {
-			background-color: rgba(255, 255, 255, 0.06);
+			background-color: #fafafa;
 		}
 
 		tr:hover {
-			background-color: rgba(149, 117, 205, 0.3);
+			background-color: #eee;
 		}
 
-		/* Product details */
 		#productDetails {
-			background: rgba(255, 255, 255, 0.1);
+			background: #f4f4f4;
 			padding: 20px;
 			border-radius: 10px;
 			font-family: 'Courier New', Courier, monospace;
-			color: #ffffff;
+			color: #222;
 			white-space: pre-wrap;
 			max-height: 250px;
 			overflow-y: auto;
-			box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+			box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 			margin-top: 10px;
 		}
 
-		/* Responsive Design */
 		@media (max-width: 600px) {
 
 			input[type="text"],
@@ -156,41 +146,35 @@
 			text-align: center;
 			margin-bottom: 30px;
 			padding-bottom: 20px;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			border-bottom: 1px solid #ccc;
 		}
 
 		.shop-header h1 {
 			font-size: 32px;
 			margin: 0;
-			color: #ffffff;
-			letter-spacing: 1.5px;
-			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			color: #333333;
 		}
 
 		.shop-header p {
 			margin: 8px auto 0;
 			font-size: 16px;
-			color: #ddd;
-			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+			color: #666;
 			max-width: 800px;
 			line-height: 1.5;
 		}
 	</style>
-
 </head>
 
 <body>
 	<div class="container">
-
 		<div class="shop-header">
 			<h1>HayatiHealth Care</h1>
-			<p> Mobile : 8623917696 | Email : affanksaudagar@gmail.com | Address: Kondhwa(411048),PUNE </p>
+			<p>Mobile: 8623917696 | Email: affanksaudagar@gmail.com | Address: Kondhwa Khurd(411048), Pune</p>
 		</div>
 
 		<h1>Product Management Admin</h1>
-
-		<!-- Add / Update Product Form -->
 		<h2>Add / Update Product</h2>
+
 		<input type="number" id="productID" placeholder="Product ID (for update only)" />
 		<input type="text" id="productName" placeholder="Product Name" />
 		<input type="text" id="productDescription" placeholder="Description" />
@@ -201,13 +185,11 @@
 		<button onclick="addProduct()">Add Product</button>
 		<button onclick="updateProduct()">Update Product</button>
 
-		<!-- Get Product By ID -->
 		<h2>Get Product by ID</h2>
 		<input type="number" id="searchProductID" placeholder="Enter Product ID" />
 		<button onclick="getProductById()">Get Product</button>
 		<pre id="productDetails"></pre>
 
-		<!-- View All Products -->
 		<h2>All Products</h2>
 		<button onclick="getAllProducts()">Refresh Products List</button>
 		<table id="productsTable">
@@ -227,19 +209,15 @@
 	</div>
 
 	<script>
-		/* Your JavaScript remains the same */
 		const baseUrl = 'http://localhost:8080/products';
-
 		const token = sessionStorage.getItem('token');
 		const email = sessionStorage.getItem('email');
-
 
 		function addProduct() {
 			const product = gatherProductForm();
 			fetch(baseUrl, {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email},
-
 				body: JSON.stringify(product)
 			}).then(res => {
 				if (res.ok) {
@@ -275,7 +253,10 @@
 				alert('Please enter product ID');
 				return;
 			}
-			fetch(`${baseUrl}/${id}`, {method: 'GET', headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email}, })
+			fetch(`${baseUrl}/${id}`, {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email},
+			})
 				.then(res => {
 					if (res.ok) return res.json();
 					else throw new Error('Product not found');
@@ -287,7 +268,10 @@
 		}
 
 		function getAllProducts() {
-			fetch(baseUrl, {method: 'GET', headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email}, })
+			fetch(baseUrl, {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email},
+			})
 				.then(res => res.json())
 				.then(products => {
 					const tbody = document.querySelector('#productsTable tbody');
@@ -295,16 +279,16 @@
 					products.forEach(p => {
 						const tr = document.createElement('tr');
 						tr.innerHTML = `
-              <td>${p.productID}</td>
-              <td>${p.productName}</td>
-              <td>${p.productDescription}</td>
-              <td>${p.productPrice}</td>
-              <td>${p.productStock}</td>
-              <td>${p.categoryType}</td>
-              <td>
-                <button onclick="deleteProduct(${p.productID})">Delete</button>
-             	<button onclick="placeOrder(${p.productID})">Buy now</button>
-              </td>`;
+							<td>${p.productID}</td>
+							<td>${p.productName}</td>
+							<td>${p.productDescription}</td>
+							<td>${p.productPrice}</td>
+							<td>${p.productStock}</td>
+							<td>${p.categoryType}</td>
+							<td>
+								<button onclick="deleteProduct(${p.productID})">Delete</button>
+								<button onclick="placeOrder(${p.productID})">Buy now</button>
+							</td>`;
 						tbody.appendChild(tr);
 					});
 				});
@@ -312,22 +296,16 @@
 
 		function deleteProduct(id) {
 			if (!confirm('Are you sure to delete product #' + id + '?')) return;
-			fetch(`${baseUrl}/${id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email}, })
+			fetch(`${baseUrl}/${id}`, {
+				method: 'DELETE',
+				headers: {'Content-Type': 'application/json', 'Authorization': token, 'emailId': email},
+			})
 				.then(res => {
 					if (res.status === 204) {
 						alert('Product deleted');
 						getAllProducts();
 					} else alert('Failed to delete product');
 				});
-		}
-
-		function fillForm(product) {
-			document.getElementById('productID').value = product.productID;
-			document.getElementById('productName').value = product.productName;
-			document.getElementById('productDescription').value = product.productDescription;
-			document.getElementById('productPrice').value = product.productPrice;
-			document.getElementById('productStock').value = product.productStock;
-			document.getElementById('categoryType').value = product.categoryType;
 		}
 
 		function gatherProductForm() {
@@ -349,11 +327,11 @@
 			document.getElementById('productStock').value = '';
 			document.getElementById('categoryType').value = '';
 		}
-		
+
 		function placeOrder(productId) {
-					sessionStorage.setItem('selectedProductId', productId);
-					window.location.href = 'orderPage';
-				}
+			sessionStorage.setItem('selectedProductId', productId);
+			window.location.href = 'orderPage';
+		}
 
 		getAllProducts();
 	</script>

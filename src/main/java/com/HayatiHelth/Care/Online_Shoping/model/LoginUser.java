@@ -1,5 +1,7 @@
 package com.HayatiHelth.Care.Online_Shoping.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +37,31 @@ public class LoginUser
 	private String authToken;
 	
 	@Column(name = "LastLoggedin" , nullable = false) 	
-	private String lastLoggedin;
+	private LocalDateTime localDateTime;
+	
+	@Column(name = "UserType" , nullable =  false)
+	private String userType;
+
+
+	public String getUserType() {
+		return userType;
+	}
+
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+
+	public LocalDateTime getLocalDateTime() {
+		return localDateTime;
+	}
+
+
+	public void setLocalDateTime(LocalDateTime localDateTime) {
+		this.localDateTime = localDateTime;
+	}
+
 
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -62,9 +88,7 @@ public class LoginUser
 		this.authToken = authToken;
 	}
 
-	public void setLastLoggedin(String lastLoggedin) {
-		this.lastLoggedin = lastLoggedin;
-	}
+
 
 	public String getUserName() {
 		return userName;
@@ -90,10 +114,7 @@ public class LoginUser
 		return authToken;
 	}
 
-	public String getLastLoggedin() {
-		return lastLoggedin;
-	}
-
+	
 
 	public Integer getUserId() {
 		return userId;

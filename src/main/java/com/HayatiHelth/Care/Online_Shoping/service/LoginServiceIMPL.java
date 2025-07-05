@@ -1,5 +1,7 @@
 package com.HayatiHelth.Care.Online_Shoping.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,13 +39,13 @@ public class LoginServiceIMPL
 	{
 		LoginUser user = new LoginUser();
 		user.setUserEmail(registrationUser.getEmail_Id());
-	//	user.setUserId(registrationUser.getUserid());
 		user.setUserName(registrationUser.getName());
 		user.setUserAddress(registrationUser.getAddress());
 		user.setAuthToken("ABC");
-		user.setLastLoggedin("da");
+		user.setLocalDateTime(LocalDateTime.now());
 		user.setUserPassword(registrationUser.getPassword());
 		user.setPhoneNumber(registrationUser.getMobil_no().longValue());
+		user.setUserType("USER");
 		loginUserRepo.save(user);
 	}
 	

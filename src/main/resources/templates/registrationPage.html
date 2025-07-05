@@ -69,6 +69,29 @@
 		.success {
 			color: green;
 		}
+
+		.login-text {
+			text-align: center;
+			margin-top: 15px;
+			font-size: 14px;
+		}
+
+		.login-btn {
+			width: 60%;
+			padding: 8px;
+			background-color: #218838;
+			border: none;
+			color: white;
+			font-size: 14px;
+			border-radius: 5px;
+			cursor: pointer;
+			margin: 10px auto 0;
+			display: block;
+		}
+
+		.login-btn:hover {
+			background-color: green;
+		}
 	</style>
 </head>
 
@@ -76,14 +99,17 @@
 
 	<div class="register-box">
 		<h2>Registration</h2>
-		
+
 		<input type="text" id="name" placeholder="Full Name" />
 		<input type="email" id="email" placeholder="Email ID" />
 		<input type="password" id="password" placeholder="Password" />
 		<input type="text" id="address" placeholder="Address" />
 		<input type="number" id="mobil_no" placeholder="Mobile Number" />
 		<button id="registerBtn">Register</button>
-		<div class="message" id="registerMsg"></div>
+
+		<div class="login-text">For Login Click Here:</div>
+		<button class="login-btn" onclick="window.location.href='loginPage'">Login</button>
+		<div class="message" id="loginMsg"></div>
 	</div>
 
 	<script>

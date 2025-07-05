@@ -10,23 +10,29 @@
 			font-family: 'Segoe UI', sans-serif;
 			margin: 0;
 			padding: 40px 20px;
-			background: linear-gradient(135deg, #2b5876, #4e4376);
-			color: #fff;
+			background: whitesmoke;
+			/* ✅ Updated background */
+			color: #333;
 			display: flex;
 			justify-content: center;
 			align-items: flex-start;
 			min-height: 100vh;
 		}
 
+		input[type="number"]:focus {
+			outline: none;
+			background: #fff;
+			box-shadow: 0 0 6px #a28fff;
+		}
+
 		.container {
-			background: rgba(255, 255, 255, 0.1);
+			background: white;
 			padding: 30px;
 			border-radius: 16px;
 			max-width: 600px;
 			width: 100%;
-			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-			backdrop-filter: blur(15px);
-			border: 1px solid rgba(255, 255, 255, 0.15);
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+			border: 1px solid #ddd;
 		}
 
 		h1 {
@@ -44,17 +50,17 @@
 			width: 100%;
 			padding: 12px;
 			margin-top: 6px;
-			border: none;
+			border: 1px solid #ccc;
 			border-radius: 8px;
-			background: rgba(255, 255, 255, 0.1);
-			color: white;
+			background: #f9f9f9;
+			color: #333;
 			font-size: 15px;
 		}
 
 		input:focus {
 			outline: none;
-			background: rgba(255, 255, 255, 0.2);
-			box-shadow: 0 0 8px #a28fff;
+			background: #f1f1f1;
+			box-shadow: 0 0 8px #aaa;
 		}
 
 		button {
@@ -79,8 +85,8 @@
 			width: 100%;
 			margin-top: 20px;
 			border-collapse: collapse;
-			background: rgba(255, 255, 255, 0.1);
-			color: white;
+			background: #fafafa;
+			color: #333;
 			border-radius: 12px;
 			overflow: hidden;
 		}
@@ -89,11 +95,11 @@
 		td {
 			padding: 10px;
 			text-align: left;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			border-bottom: 1px solid #ccc;
 		}
 
 		th {
-			background-color: rgba(255, 255, 255, 0.2);
+			background-color: #eee;
 		}
 	</style>
 </head>
