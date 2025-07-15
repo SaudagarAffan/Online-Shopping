@@ -15,85 +15,129 @@ import java.time.LocalDateTime;
 @Table(name="orders")
 public class Order
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "OrderID" , nullable = false , unique = true)
-    private Integer orderId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "OrderID" , nullable = false , unique = true)
+	private Integer orderId;
 
-    @Column(name = "ProductName" , nullable = false)
-    private String productName;
+	@Column(name = "ProductName" , nullable = false)
+	private String productName;
 
-    @Column(name = "ProductAmount" , nullable = false)
-    private Double productAmount;
+	@Column(name = "ProductAmount" , nullable = false)
+	private Double productAmount;
 
-    @Column(name = "ProductQuantity" , nullable = false)
-    private Integer productQuantity;
+	@Column(name = "ProductQuantity" , nullable = false)
+	private Integer productQuantity;
 
-    @ManyToOne
-    @JoinColumn(name = "productID", referencedColumnName = "productID", nullable = false)
-    private Product product;
-    
-    @ManyToOne
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID", nullable = false)
-    private LoginUser loginUser;
+	@ManyToOne
+	@JoinColumn(name = "productID", referencedColumnName = "productID", nullable = false)
+	private Product product;
 
-	
+	@ManyToOne
+	@JoinColumn(name = "UserID", referencedColumnName = "UserID", nullable = false)
+	private LoginUser loginUser;
+
+
 	@Column(name = "OrderDate" , nullable = false)
-    private LocalDateTime localDateTime;
-    
-    public String getProductName() {
-        return productName;
-    }
+	private LocalDateTime localDateTime;
 
-    public LoginUser getLoginUser() {
+	@Column(name = "Address", nullable = false)
+	private String address;
+
+	@Column(name = "City", nullable = false)
+	private String city;
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	@Column(name = "Pincode", nullable = false)
+	private String pincode;
+
+	@Column(name = "Mobile", nullable = false)
+	private String mobile;
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public LoginUser getLoginUser() {
 		return loginUser;
 	}
 
 	public void setLoginUser(LoginUser loginUser) {
 		this.loginUser = loginUser;
 	}
-    
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
 
-    public Double getProductAmount() {
-        return productAmount;
-    }
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
-    public void setProductAmount(Double productAmount) {
-        this.productAmount = productAmount;
-    }
+	public Double getProductAmount() {
+		return productAmount;
+	}
 
-    public Integer getProductQuantity() {
-        return productQuantity;
-    }
+	public void setProductAmount(Double productAmount) {
+		this.productAmount = productAmount;
+	}
 
-    public void setProductQuantity(Integer productQuantity) {
-        this.productQuantity = productQuantity;
-    }
+	public Integer getProductQuantity() {
+		return productQuantity;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public void setProductQuantity(Integer productQuantity) {
+		this.productQuantity = productQuantity;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public Integer getOrderId() {
-        return orderId;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
+	public Integer getOrderId() {
+		return orderId;
+	}
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
-    }
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
-    }
+	public LocalDateTime getLocalDateTime() {
+		return localDateTime;
+	}
+
+	public void setLocalDateTime(LocalDateTime localDateTime) {
+		this.localDateTime = localDateTime;
+	}
 }

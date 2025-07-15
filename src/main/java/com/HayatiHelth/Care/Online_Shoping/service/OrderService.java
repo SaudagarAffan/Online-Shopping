@@ -23,34 +23,35 @@ public class OrderService
 	@Autowired
 	private ProductRepository productRepository;
 
-	
+
 	@Autowired
 	private LoginUserRepository loginUserRepository;
-	
-	public OrderResponse placeOrder(Long productId, Integer quantity , String email) 
-	{
-		Product product = productRepository.findById(productId).orElseThrow(() ->
-		new RuntimeException("Product not found with ID: " + productId));
-		
+
+	public OrderResponse placeOrder(OrderRequest orderRequest, String email) {
+		Product product = productRepository.findById(orderRequest.getProductID())
+				.orElseThrow(() -> new RuntimeException("Product not found with ID: " + orderRequest.getProductID()));
+
 		LoginUser loginUser = loginUserRepository.getByUserEmail(email);
-		
-		if(product.getProductStock()>=quantity)
-		{
+		Integer quantity = orderRequest.getQuantity();
+
+		if (product.getProductStock() >= quantity) {
 			Order order = new Order();
 			order.setProduct(product);
 			order.setProductName(product.getProductName());
-			order.setProductAmount((double) (product.getProductPrice() * quantity));
+			order.setProductAmount(product.getProductPrice() * quantity);
 			order.setProductQuantity(quantity);
 			order.setLocalDateTime(LocalDateTime.now());
 			order.setLoginUser(loginUser);
-		
-			orderRepository.save(order);
-			
-			product.setProductStock(product.getProductStock() - quantity);
-	        productRepository.save(product);
+			order.setAddress(orderRequest.getAddress());
+			order.setCity(orderRequest.getCity());
+			order.setPincode(orderRequest.getPincode());
+			order.setMobile(orderRequest.getMobile());
 
-			Order savedOrder =   orderRepository.save(order);
+			Order savedOrder = orderRepository.save(order);
+
+			product.setProductStock(product.getProductStock() - quantity);
 			productRepository.save(product);
+
 			OrderResponse or = new OrderResponse();
 			or.setOrderId(savedOrder.getOrderId());
 			or.setProductId(savedOrder.getProduct().getProductID());
@@ -58,12 +59,11 @@ public class OrderService
 			or.setProductAmount(savedOrder.getProductAmount());
 			or.setProductQuantity(savedOrder.getProductQuantity());
 			return or;
-		}
-		else
-		{
+		} else {
 			throw new RuntimeException("Product Out of Stock!");
 		}
 	}
+
 
 	public Order updateOrder(Integer orderId, OrderRequest orderRequest) 
 	{
@@ -72,7 +72,7 @@ public class OrderService
 
 		Product product = productRepository.findById(orderRequest.getProductID())
 				.orElseThrow(() -> new RuntimeException("Product not found with ID: " + orderRequest.getProductID()));
-		
+
 		existingOrder.setProduct(product);
 		existingOrder.setProductName(product.getProductName());
 		existingOrder.setProductAmount(product.getProductPrice() * orderRequest.getQuantity());

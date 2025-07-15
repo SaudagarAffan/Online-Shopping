@@ -11,7 +11,6 @@
 			margin: 0;
 			padding: 40px 20px;
 			background: whitesmoke;
-			/* ✅ Updated background */
 			color: #333;
 			display: flex;
 			justify-content: center;
@@ -19,7 +18,8 @@
 			min-height: 100vh;
 		}
 
-		input[type="number"]:focus {
+		input[type="number"]:focus,
+		input[type="text"]:focus {
 			outline: none;
 			background: #fff;
 			box-shadow: 0 0 6px #a28fff;
@@ -119,6 +119,18 @@
 
 			<label>Quantity</label>
 			<input type="number" id="orderQuantity" placeholder="Enter quantity to buy" />
+
+			<label>Address</label>
+			<input type="text" id="orderAddress" placeholder="Enter delivery address" />
+
+			<label>City</label>
+			<input type="text" id="orderCity" placeholder="Enter city" />
+
+			<label>Pincode</label>
+			<input type="text" id="orderPincode" placeholder="Enter pincode" />
+
+			<label>Mobile Number</label>
+			<input type="text" id="orderMobile" placeholder="Enter mobile number" />
 		</div>
 
 		<button onclick="placeOrder()">Confirm Order</button>
@@ -172,6 +184,11 @@
 		// Place Order
 		function placeOrder() {
 			const quantity = parseInt(document.getElementById("orderQuantity").value);
+			const address = document.getElementById("orderAddress").value.trim();
+			const city = document.getElementById("orderCity").value.trim();
+			const pincode = document.getElementById("orderPincode").value.trim();
+			const mobile = document.getElementById("orderMobile").value.trim();
+
 			if (!quantity || quantity <= 0) {
 				alert("Please enter a valid quantity.");
 				return;
@@ -180,12 +197,20 @@
 				alert("Quantity exceeds available stock.");
 				return;
 			}
+			if (!address || !city || !pincode || !mobile) {
+				alert("Please fill in all delivery fields.");
+				return;
+			}
 
 			const orderData = {
 				productID: product.productID,
 				productName: product.productName,
 				amount: product.productPrice,
-				quantity: quantity
+				quantity: quantity,
+				address: address,
+				city: city,
+				pincode: pincode,
+				mobile: mobile
 			};
 
 			fetch(`${baseUrl}/place`, {
@@ -212,6 +237,13 @@
 				})
 				.catch(err => alert(err.message));
 		}
+
+		// Handle Enter key on quantity input
+		document.getElementById("orderQuantity").addEventListener("keydown", function (event) {
+			if (event.key === "Enter") {
+				placeOrder();
+			}
+		});
 
 		// Get All Orders
 		function getAllOrders() {
